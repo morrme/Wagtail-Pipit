@@ -10,13 +10,13 @@ class CustomImageSerializer(serializers.ModelSerializer):
     id = serializers.SerializerMethodField()
     focal = serializers.SerializerMethodField()
 
-    def get_id(self, obj):
+    def get_id(self, obj) -> int:
         if hasattr(self, "_mocked_id"):
             return self._mocked_id
 
         return obj.pk
 
-    def get_url(self, obj):
+    def get_url(self, obj) -> str:
         if hasattr(self, "_mocked_url"):
             return self._mocked_url
 

@@ -1,5 +1,5 @@
 from .base_serializer import BasePageSerializer
-from . import HomePage
+from .home import HomePage
 
 
 class HomePageSerializer(BasePageSerializer):

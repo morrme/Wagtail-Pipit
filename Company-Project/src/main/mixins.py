@@ -1,7 +1,10 @@
+from typing import List, Set, Dict, Tuple, Optional, Any
+
 from django.utils.module_loading import import_string
 from django.utils.translation import ugettext_lazy as _
 from django.db import models
-from django.http import HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
+from django.http.request import HttpRequest
 from django.utils.functional import cached_property
 from wagtail.utils.decorators import cached_classmethod
 from wagtail.admin.edit_handlers import (
@@ -10,13 +13,14 @@ from wagtail.admin.edit_handlers import (
     FieldPanel,
     MultiFieldPanel,
 )
+from rest_framework import serializers
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.core.models import Page
 
 
 class RedirectUpMixin:
-    def serve(self, request, *args, **kwargs):
-        parent = self.get_parent()
+    def serve(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
+        parent = self.get_parent()  # type: ignore
         return HttpResponseRedirect(parent.url)
 
 
@@ -132,51 +136,51 @@ class SeoMixin(Page):
         return images[0]
 
     @cached_property
-    def seo_html_title(self):
+    def seo_html_title(self) -> str:
         return self.seo_title or self.title
 
     @cached_property
-    def seo_meta_description(self):
+    def seo_meta_description(self) -> str:
         return self.search_description
 
     @cached_property
-    def seo_og_title(self):
+    def seo_og_title(self) -> str:
         return self.og_title or self.title
 
     @cached_property
-    def seo_og_description(self):
+    def seo_og_description(self) -> str:
         return self.og_description or self.title
 
     @cached_property
-    def seo_og_url(self):
+    def seo_og_url(self) -> str:
         return self.seo_canonical_link
 
     @cached_property
-    def seo_canonical_link(self):
+    def seo_canonical_link(self) -> str:
         return self.canonical_link or self.full_url
 
     @cached_property
-    def seo_og_type(self):
+    def seo_og_type(self) -> Optional[str]:
         return None
 
     @cached_property
-    def seo_twitter_title(self):
+    def seo_twitter_title(self) -> str:
         return self.twitter_title or self.title
 
     @cached_property
-    def seo_twitter_description(self):
+    def seo_twitter_description(self) -> Optional[str]:
         return self.twitter_description
 
     @cached_property
-    def seo_twitter_url(self):
+    def seo_twitter_url(self) -> str:
         return self.seo_canonical_link
 
     @cached_property
-    def seo_twitter_image(self):
+    def seo_twitter_image(self) -> str:
         return self.twitter_image or self.seo_og_image
 
     @cached_property
-    def seo_meta_robots(self):
+    def seo_meta_robots(self) -> str:
         index = "noindex" if self.robot_noindex else "index"
         follow = "nofollow" if self.robot_nofollow else "follow"
         return "{},{}".format(index, follow)
@@ -233,30 +237,31 @@ class TimestampMixin(models.Model):
 
 
 class ReactViewMixin(object):
-    template_name = "pages/react.html"
+    template_name: str = "pages/react.html"
+    component_name: str = ""
+    request: HttpRequest
+    serializer_class: serializers.Serializer
 
-    def render_to_response(self, context, **response_kwargs):
+    def render_to_response(self, context: Dict, **response_kwargs) -> HttpResponse:
         if self.should_serve_json(self.request):
-            from django.http import JsonResponse
-
             props = self.to_dict({"request": self.request})
             return JsonResponse(props)
 
-        return super().render_to_response(context, **response_kwargs)
+        return super().render_to_response(context, **response_kwargs)  # type: ignore
 
     @staticmethod
-    def should_serve_json(request):
+    def should_serve_json(request: HttpRequest) -> bool:
         return (
             request.GET.get("format", None) == "json"
             or request.content_type == "application/json"
         )
 
-    def get_context_data(self, *args, **kwargs):
-        context = super().get_context_data(*args, **kwargs)
+    def get_context_data(self, *args, **kwargs) -> Dict[str, Any]:
+        context = super().get_context_data(*args, **kwargs)  # type: ignore
 
         return {**context, "props": self.to_dict({"request": self.request})}
 
-    def to_dict(self, context):
+    def to_dict(self, context: Dict) -> Dict[str, Any]:
         serializer_cls = self.get_serializer_class()
         serializer = serializer_cls(
             self.get_component_props(), context={"request": context["request"]}
@@ -267,17 +272,17 @@ class ReactViewMixin(object):
             "component_props": serializer.data,
         }
 
-    def get_serializer_class(self):
+    def get_serializer_class(self) -> serializers.Serializer:
         if isinstance(self.serializer_class, str):
             return import_string(self.serializer_class)
 
         return self.serializer_class
 
-    def get_component_name(self):
-        if hasattr(self, "component_name"):
+    def get_component_name(self) -> str:
+        if self.component_name:
             return self.component_name
 
         return self.__class__.__name__
 
-    def get_component_props(self):
+    def get_component_props(self) -> Dict[str, Any]:
         return {}

@@ -6,6 +6,8 @@ Write local settings here, or override base settings
 """
 from __future__ import absolute_import, unicode_literals
 
+from typing import List, Set, Dict, Tuple, Optional
+
 from pipit.settings.base import *  # NOQA
 
 VS_CODE_REMOTE_DEBUG = get_env_bool("VS_CODE_REMOTE_DEBUG", default=False)
@@ -22,7 +24,7 @@ INSTALLED_APPS += ["debug_toolbar", "sslserver"]
 MIDDLEWARE += ["debug_toolbar.middleware.DebugToolbarMiddleware"]
 
 # Allow weak local passwords
-AUTH_PASSWORD_VALIDATORS = []
+AUTH_PASSWORD_VALIDATORS: List = []
 
 INTERNAL_IPS = get_env("INTERNAL_IPS", default="").split(",")
 

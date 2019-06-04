@@ -7,6 +7,7 @@ Django settings for Fröjd Django projects.
 from __future__ import absolute_import, unicode_literals
 
 import os
+from typing import List, Set, Dict, Tuple, Optional
 
 from boto.s3.connection import OrdinaryCallingFormat, S3Connection
 
@@ -86,7 +87,7 @@ MIDDLEWARE = [
 ROOT_URLCONF = "pipit.urls"
 APPEND_SLASH = True
 
-TEMPLATES = [
+TEMPLATES: List = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         "DIRS": ["templates"],

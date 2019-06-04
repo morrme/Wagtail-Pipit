@@ -1,16 +1,19 @@
+from typing import Optional, Any, Dict
+
 from rest_framework import serializers
 from wagtail.images.shortcuts import get_rendition_or_not_found
+from wagtail.core.models import Page
 
 from sitesettings.models import SiteSetting
 from sitesettings.serializers import SiteSettingSerializer
-from .pages import BasePage
+from .pages.base import BasePage
 
 
 class NotFoundPageSerializer(serializers.Serializer):
     exception = serializers.CharField()
     site_setting = serializers.SerializerMethodField()
 
-    def get_site_setting(self, page):
+    def get_site_setting(self, page) -> Dict[str, Any]:
         request = self.context["request"]
         site_setting = SiteSetting.for_site(request.site)
         return SiteSettingSerializer(site_setting).data
@@ -37,7 +40,7 @@ class SeoSerializer(serializers.ModelSerializer):
             "canonical_link",
         ]
 
-    def get_seo_og_image(self, page):
+    def get_seo_og_image(self, page: Page) -> Optional[str]:
         root_url = page.get_site().root_url
         image = page.seo_og_image
 
@@ -51,7 +54,7 @@ class SeoSerializer(serializers.ModelSerializer):
 
         return f"{root_url}{rendition.url}"
 
-    def get_seo_twitter_image(self, page):
+    def get_seo_twitter_image(self, page: Page) -> Optional[str]:
         root_url = page.get_site().root_url
         image = page.seo_twitter_image
 
