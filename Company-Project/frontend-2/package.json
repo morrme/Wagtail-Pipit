@@ -12,10 +12,11 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "_build": "react-scripts build",
+    "build": "node ./scripts/build-non-split.js",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "postbuild": "mv build ../src/pipit/static/pipit/build/*"
+    "postbuild": "rm -rf ../src/pipit/static/pipit/build/ || true && cp -r build/ ../src/pipit/static/pipit/build/"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -31,5 +32,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "rewire": "^4.0.1"
   }
 }
