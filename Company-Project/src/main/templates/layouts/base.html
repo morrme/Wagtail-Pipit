@@ -31,14 +31,13 @@
         {% block seo_meta %}
         {% endblock %}
 
-        <link rel="stylesheet" href="{% static 'pipit/index.css' %}" type="text/css" />
+        <link rel="stylesheet" href="{% static 'pipit/build/static/css/main.css' %}" type="text/css" />
     </head>
     <body>
         {% block main %}
         {% endblock main %}
 
-        <script type="text/javascript" src="{% static 'pipit/vendor.js' %}"></script>
-        <script type="text/javascript" src="{% static 'pipit/index.js' %}"></script>
+        <script type="text/javascript" src="{% static 'pipit/build/static/js/main.js' %}"></script>
 
         {% if SETTINGS.SENTRY_DSN %}
             <script src="https://browser.sentry-cdn.com/5.6.1/bundle.min.js" integrity="sha384-pGTFmbQfua2KiaV2+ZLlfowPdd5VMT2xU4zCBcuJr7TVQozMO+I1FmPuVHY3u8KB" crossorigin="anonymous"></script>
