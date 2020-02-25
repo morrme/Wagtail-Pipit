@@ -41,6 +41,7 @@
     "esm": "^3.2.25",
     "hypernova": "^2.5.0",
     "hypernova-react": "^2.1.0",
+    "module-alias": "^2.2.2",
     "rewire": "^4.0.1"
   }
 }

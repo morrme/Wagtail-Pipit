@@ -1,5 +1,12 @@
-var hypernova = require('hypernova/server');
+const hypernova = require('hypernova/server');
 require = require("esm")(module/*, options*/)
+
+const moduleAlias = require('module-alias')
+moduleAlias.addAliases({
+  'utils': __dirname + '/src/utils',
+  'styles': __dirname + '/src/styles',
+  'Components': __dirname + '/src/components',
+})
 
 hypernova({
     devMode: true,
