@@ -4,7 +4,6 @@ import cache from '../../containers';
 import './App.scss';
 
 
-
 class App extends PureComponent {
     render() {
         const camelProps = { ...keysToCamelFromSnake(this.props) };
