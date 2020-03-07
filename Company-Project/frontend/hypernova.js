@@ -5,7 +5,7 @@ const moduleAlias = require('module-alias')
 moduleAlias.addAliases({
   'utils': __dirname + '/src/utils',
   'styles': __dirname + '/src/styles',
-  'Components': __dirname + '/src/components',
+  'components': __dirname + '/src/components',
 })
 
 hypernova({
