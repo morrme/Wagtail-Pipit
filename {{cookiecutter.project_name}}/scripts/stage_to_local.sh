@@ -2,18 +2,35 @@
 set -e
 
 # Arguments
-local_domain=${1-{{cookiecutter.domain_stage}}.test:{{cookiecutter.docker_web_port}}}
-ssh_host=${2-{{cookiecutter.ssh_stage}}}
+local_domain={{cookiecutter.domain_stage}}.test:{{cookiecutter.docker_web_port}}
+ssh_host={{cookiecutter.ssh_stage}}
+standalone_web=0
 db_wait_time=20
 
 SCRIPTS_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 DOCKER_DIR=${SCRIPTS_DIR}/../docker/
 
-echo "Creating database dump from stage..."
-ssh $ssh_host "export PGUSER=postgres && pg_dump {{ cookiecutter.db_name_stage }} --no-owner > /tmp/db-dump.sql"
+while getopts l:s:t: option
+do
+    case "${option}"
+        in
+        l) local_domain=${OPTARG};;
+        s) ssh_host=${OPTARG};;
+        t) standalone_web=1
+    esac
+done
+
+if [[ $standalone_web == 1 ]]; then
+    manage_prefix="python src/manage.py "
+else
+    manage_prefix="docker-compose exec web python manage.py "
+fi
+
+echo "Creating database dump from prod..."
+ssh $ssh_host "export PGUSER=postgres && pg_dump {{ cookiecutter.db_name_prod }} --no-owner > /tmp/db-dump.sql"
 
 echo "Downloading database dump..."
-scp $ssh_host:/tmp/db-dump.sql $DOCKERDIR/files/db-dumps/db-dump.sql
+scp $ssh_host:/tmp/db-dump.sql $DOCKER_DIR/files/db-dumps/db-dump.sql
 ssh $ssh_host "rm /tmp/db-dump.sql"
 
 echo "Rebuilding docker containers."
@@ -27,9 +44,12 @@ sleep $db_wait_time
 
 echo "Adjusting database..."
 
-docker-compose exec web python manage.py wagtail_change_site_domain --site_id=1 --new_site_domain=$local_domain
+$manage_prefix wagtail_change_site_domain --site_id=1 --new_site_domain=$local_domain
+$manage_prefix change_user_password --user=admin --password=admin
 
-docker-compose exec web python manage.py change_user_password --user=admin --password=admin
+if [[ $standalone_web == 1 ]]; then
+    $manage_prefix runserver localhost:{{cookiecutter.docker_web_port}}
+fi
 
 echo "---"
 echo "Done!"
