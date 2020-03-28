@@ -31,13 +31,22 @@
         {% block seo_meta %}
         {% endblock %}
 
-        <link rel="stylesheet" href="{% static 'pipit/build/static/css/main.css' %}" type="text/css" />
+        {% if not SETTINGS.REACT_DEVSERVER  %}
+            <link rel="stylesheet" href="{% static 'pipit/build/static/css/main.css' %}" type="text/css" />
+        {% endif %}
     </head>
     <body>
         {% block main %}
         {% endblock main %}
 
-        <script type="text/javascript" src="{% static 'pipit/build/static/js/main.js' %}"></script>
+        {% if SETTINGS.REACT_DEVSERVER  %}
+            <script>document.domain = 'localhost';</script>
+            <iframe src="http://localhost:3000/?devserver=1" id="fontend-devserver" style="height: 0; width: 0; border: 0; visibility: hidden;"></iframe>
+        {% endif %}
+
+        {% if not SETTINGS.REACT_DEVSERVER  %}
+            <script type="text/javascript" src="{% static 'pipit/build/static/js/main.js' %}"></script>
+        {% endif %}
 
         {% if SETTINGS.SENTRY_DSN %}
             <script src="https://browser.sentry-cdn.com/5.6.1/bundle.min.js" integrity="sha384-pGTFmbQfua2KiaV2+ZLlfowPdd5VMT2xU4zCBcuJr7TVQozMO+I1FmPuVHY3u8KB" crossorigin="anonymous"></script>

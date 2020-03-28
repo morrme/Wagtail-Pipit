@@ -59,7 +59,6 @@ INSTALLED_APPS = [
     "wagtail.contrib.settings",
     "modelcluster",
     "taggit",
-    "django_react_templatetags",
     "wagtailfontawesome",
     # Project specific apps
     "pipit",
@@ -68,6 +67,8 @@ INSTALLED_APPS = [
     "customimage",
     "customdocument",
     "main",
+    # 3 part
+    "django_react_templatetags",
 ]
 
 MIDDLEWARE = [
@@ -241,3 +242,5 @@ ADMIN_URL = r"^admin/"
 # React Templatetags
 REACT_COMPONENT_PREFIX = "Components."
 REACT_RENDER_HOST = get_env("REACT_HOST")
+REACT_DEVSERVER = False
+_REACT_DEVSERVER = True
