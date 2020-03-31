@@ -10,4 +10,4 @@ require('@babel/register')({
 
 require.extensions['.scss'] = () => {};
 require.extensions['.css'] = () => {};
-require('./hypernova');
+require('./app/hypernova');

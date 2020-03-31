@@ -38,13 +38,8 @@
     ]
   },
   "devDependencies": {
-    "@babel/core": "^7.8.4",
-    "@babel/preset-env": "^7.8.4",
-    "@babel/register": "^7.8.3",
-    "esm": "^3.2.25",
-    "hypernova": "^2.5.0",
-    "hypernova-react": "^2.1.0",
     "module-alias": "^2.2.2",
-    "rewire": "^4.0.1"
+    "rewire": "^4.0.1",
+    "hypernova-react": "^2.1.0"
   }
 }

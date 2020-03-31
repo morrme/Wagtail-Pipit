@@ -58,3 +58,6 @@ htmlcov
 
 # Mypy
 .mypy_cache
+
+# Hypernova
+.ignored-node_modules

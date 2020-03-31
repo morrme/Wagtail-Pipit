@@ -242,5 +242,8 @@ ADMIN_URL = r"^admin/"
 # React Templatetags
 REACT_COMPONENT_PREFIX = "Components."
 REACT_RENDER_HOST = get_env("REACT_HOST")
-REACT_DEVSERVER = False
-_REACT_DEVSERVER = True
+REACT_SSR_SERVICE = "django_react_templatetags.ssr.hypernova.HypernovaService"
+
+_REACT_DEVSERVER = False
+REACT_DEVSERVER = True
+
