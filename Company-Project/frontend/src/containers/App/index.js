@@ -1,3 +1,4 @@
 import App from './App';
+import { renderReact } from 'hypernova-react';
 
-export default App;
+export default renderReact('App.js', App)
