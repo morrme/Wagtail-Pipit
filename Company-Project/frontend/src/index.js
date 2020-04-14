@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.scss';
 import containers from './containers';
+
 //import * as serviceWorker from './serviceWorker';
 
 //ReactDOM.render(<App />, document.getElementById('root'));
@@ -21,12 +22,14 @@ if (DEVSERVER) {
     target = window.parent;
 }
 
+
 target.React = React;
 target.ReactDOM = ReactDOM;
 target.Components = containers;
 
 function copyStylesToParent() {
-    console.log("copyStylesToParent")
+    console.log('- Polling copyStylesToParent');
+
     var localStyles = document.getElementsByTagName('style');
     var parentDocument = window.parent.document
 
@@ -36,14 +39,18 @@ function copyStylesToParent() {
 
     var styleWrapper = parentDocument.createElement('div')
     styleWrapper.setAttribute('id', 'parent-style-wrapper')
-    parentDocument.body.appendChild(styleWrapper);
 
     for (var i=0; i<localStyles.length; i++) {
         var style = localStyles[i].cloneNode(true);
         styleWrapper.appendChild(style);
     }
+
+    parentDocument.body.appendChild(styleWrapper);
 }
 
 if (DEVSERVER) {
     copyStylesToParent();
+    setInterval(function() {
+        copyStylesToParent();
+    }, 500);
 }
