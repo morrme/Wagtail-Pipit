@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^7.1.2",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
+    "hypernova": "^2.5.0",
     "node-sass": "^4.13.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
@@ -38,8 +39,8 @@
     ]
   },
   "devDependencies": {
+    "hypernova-react": "^2.1.0",
     "module-alias": "^2.2.2",
-    "rewire": "^4.0.1",
-    "hypernova-react": "^2.1.0"
+    "rewire": "^4.0.1"
   }
 }
