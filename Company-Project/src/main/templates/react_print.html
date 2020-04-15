@@ -8,7 +8,8 @@
                     {% else %}
                         null
                     {% endif %}),
-                document.getElementById('{{ component.identifier }}')
+                (document.getElementById('{{ component.identifier }}').firstChild
+                || document.getElementById('{{ component.identifier }}'))
             );
         {% endfor %}
     }

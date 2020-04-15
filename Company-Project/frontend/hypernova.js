@@ -1,4 +1,5 @@
 const hypernova = require('hypernova/server');
+const renderReact = require('hypernova-react').renderReact;
 const path = require("path");
 
 require = require("esm")(module/*, options*/)
@@ -40,8 +41,9 @@ let config = {
                 invalidateModuleCacheStartingWith(__dirname);
             }
 
-             try {
-                 return require("./src/containers/App");
+            try {
+                const Component = require("./src/containers/App").default;
+                return renderReact(name, Component);
             } catch (e) {
                 console.log(e);
             }
