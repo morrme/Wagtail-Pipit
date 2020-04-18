@@ -22,7 +22,6 @@ if (DEVSERVER) {
     target = window.parent;
 }
 
-
 target.React = React;
 target.ReactDOM = ReactDOM;
 target.Components = containers;
@@ -30,7 +29,7 @@ target.Components = containers;
 function copyStylesToParent() {
     console.log('- Polling copyStylesToParent');
 
-    var localStyles = document.getElementsByTagName('style');
+    var localStyles = [...document.getElementsByTagName('style')];
     var parentDocument = window.parent.document
 
     if (parentDocument.getElementById('parent-style-wrapper')) {
@@ -40,17 +39,15 @@ function copyStylesToParent() {
     var styleWrapper = parentDocument.createElement('div')
     styleWrapper.setAttribute('id', 'parent-style-wrapper')
 
-    for (var i=0; i<localStyles.length; i++) {
-        var style = localStyles[i].cloneNode(true);
+    localStyles.forEach(localStyle => {
+        var style = localStyle.cloneNode(true);
         styleWrapper.appendChild(style);
-    }
+    });
 
     parentDocument.body.appendChild(styleWrapper);
 }
 
 if (DEVSERVER) {
     copyStylesToParent();
-    setInterval(function() {
-        copyStylesToParent();
-    }, 500);
+    setInterval(copyStylesToParent, 1000);
 }

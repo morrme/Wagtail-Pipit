@@ -15,7 +15,7 @@
     }
 
     {% if SETTINGS.REACT_DEVSERVER %}
-        document.getElementById("fontend-devserver").onload = initReact;
+        document.getElementById("frontend-devserver").onload = initReact;
     {% else %}
         initReact();
     {% endif %}
