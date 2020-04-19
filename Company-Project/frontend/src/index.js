@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import md5 from 'blueimp-md5';
 import './index.scss';
 import containers from './containers';
 
@@ -32,18 +33,28 @@ function copyStylesToParent() {
     var localStyles = [...document.getElementsByTagName('style')];
     var parentDocument = window.parent.document
 
-    if (parentDocument.getElementById('parent-style-wrapper')) {
-        parentDocument.getElementById('parent-style-wrapper').remove();
-    }
-
     var styleWrapper = parentDocument.createElement('div')
-    styleWrapper.setAttribute('id', 'parent-style-wrapper')
+    styleWrapper.setAttribute('id', 'new-parent-style-wrapper')
 
     localStyles.forEach(localStyle => {
         var style = localStyle.cloneNode(true);
         styleWrapper.appendChild(style);
     });
 
+    var existingStyleWrapper = parentDocument.getElementById('parent-style-wrapper');
+    if (
+        existingStyleWrapper
+        && existingStyleWrapper.dataset.checksum === md5(styleWrapper.innerHTML)
+    ) {
+        return;
+    }
+
+    if (existingStyleWrapper) {
+        parentDocument.getElementById('parent-style-wrapper').remove();
+    }
+
+    styleWrapper.setAttribute('id', 'parent-style-wrapper')
+    styleWrapper.setAttribute('data-checksum', md5(styleWrapper.innerHTML));
     parentDocument.body.appendChild(styleWrapper);
 }
 
