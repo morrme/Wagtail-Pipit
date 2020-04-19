@@ -6,7 +6,9 @@ ENV HYPERNOVA_PORT=3030 \
     HYPERNOVA_DEV_MODE=1 \
     HYPERNOVA_HOST=0.0.0.0 \
     HYPERNOVA_DISABLE_MODULE_ACHE=0 \
-    HYPERNOVA_USE_VM=0
+    SENTRY_DSN= \
+    SENTRY_ENV=local \
+    SENTRY_RELEASE=0.0.1
 
 ADD package.json package.json
 RUN npm install

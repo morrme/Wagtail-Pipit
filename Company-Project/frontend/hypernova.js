@@ -1,6 +1,7 @@
 const hypernova = require('hypernova/server');
 const renderReact = require('hypernova-react').renderReact;
-const path = require("path");
+const Sentry = require('@sentry/node');
+// const path = require("path");
 
 require = require("esm")(module/*, options*/)
 
@@ -16,7 +17,10 @@ const PORT = parseInt(process.env.HYPERNOVA_PORT);
 const DEV_MODE = process.env.HYPERNOVA_DEV_MODE === '1';
 const HYPERNOVA_HOST = process.env.HYPERNOVA_HOST;
 const DISABLE_MODULE_CACHE = process.env.HYPERNOVA_DISABLE_MODULE_CACHE === '1';
-const USE_VM = process.env.HYPERNOVA_USE_VM === '1';
+const SENTRY_DSN = process.env.SENTRY_DSN;
+const SENTRY_ENV = process.env.SENTRY_ENV;
+const SENTRY_RELEASE = process.env.SENTRY_RELEASE;
+// const USE_VM = process.env.HYPERNOVA_USE_VM === '1';
 
 function invalidateModuleCacheStartingWith(path) {
     for (let name in require.cache) {
@@ -28,13 +32,27 @@ function invalidateModuleCacheStartingWith(path) {
     }
 }
 
+if (SENTRY_DSN) {
+    console.log('Sentry is enabled with DSN='+SENTRY_DSN);
+     Sentry.init({
+         release: SENTRY_RELEASE,
+         dsn: SENTRY_DSN,
+         environment: SENTRY_ENV,
+     })
+}
+
 let config = {
     devMode: DEV_MODE,
     port: PORT,
     host: HYPERNOVA_HOST,
-    // loggerInstance: {
-    //     log: console.log,
-    // },
+    loggerInstance: {
+        log: (category, message, _meta) => {
+            if (category === 'info') {
+                return;
+            }
+            Sentry.captureException(message);
+        }
+    },
     getComponent(name, _context) {
         if (name === 'Components.App') {
             if (DISABLE_MODULE_CACHE) {
@@ -45,7 +63,7 @@ let config = {
                 const Component = require("./src/containers/App").default;
                 return renderReact(name, Component);
             } catch (e) {
-                console.log(e);
+                Sentry.captureException(e);
             }
         }
         return null;

@@ -9,6 +9,7 @@
     "esm": "^3.2.25",
     "hypernova": "^2.5.0",
     "hypernova-react": "^2.1.0",
-    "babel-preset-react-app": "9.1.2"
+    "babel-preset-react-app": "9.1.2",
+    "@sentry/node": "^5.15.4"
   }
 }
