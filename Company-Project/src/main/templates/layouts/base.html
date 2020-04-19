@@ -34,7 +34,7 @@
         {% endblock %}
 
         {% if not SETTINGS.REACT_DEVSERVER  %}
-            {% cache None assets_css SETTINGS.APP_VERSION %}
+            {% cache None assets_css 'pipit/build/index.html'|hashed_name %}
                 {% extract_elements 'pipit/build/index.html' 'stylesheet' 'pipit/build' %}
             {% endcache %}
         {% endif %}
@@ -49,7 +49,7 @@
         {% endif %}
 
         {% if not SETTINGS.REACT_DEVSERVER  %}
-            {% cache None assets_js SETTINGS.APP_VERSION %}
+            {% cache None assets_js 'pipit/build/index.html'|hashed_name %}
                 {% extract_elements 'pipit/build/index.html' 'script' 'pipit/build' %}
             {% endcache %}
         {% endif %}
