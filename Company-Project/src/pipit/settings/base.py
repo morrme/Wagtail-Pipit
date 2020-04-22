@@ -244,6 +244,12 @@ REACT_COMPONENT_PREFIX = "Components."
 REACT_RENDER_HOST = get_env("REACT_HOST")
 REACT_SSR_SERVICE = "django_react_templatetags.ssr.hypernova.HypernovaService"
 
-_REACT_DEVSERVER = False
-REACT_DEVSERVER = True
-
+REACT_DEVSERVER = False
+REACT_DEVSERVER_URL = get_env(
+    "REACT_DEVSERVER_URL",
+    "http://frontend:3000/proxy/"
+)
+REACT_DEVSERVER_PUBLIC_URL = get_env(
+    "REACT_DEVSERVER_PUBLIC_URL",
+    "http://localhost:3000/proxy/"
+)

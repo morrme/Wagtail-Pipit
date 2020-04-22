@@ -6,6 +6,7 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
+    "blueimp-md5": "^2.13.0",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
     "node-sass": "^4.13.1",
@@ -15,11 +16,11 @@
     "react-test-renderer": "^16.12.0"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "PUBLIC_URL=/proxy react-scripts start",
+    "build": "PUBLIC_URL=/static/pipit/build react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "postbuild": "rm -rf ../src/pipit/static/pipit/build/ || true && cp -r build/ ../src/pipit/static/pipit/build/"
+    "postbuild": "rm -rf /webapp/pipit/static/pipit/build/ || true && cp -r build/ /webapp/pipit/static/pipit/build/"
   },
   "eslintConfig": {
     "extends": "react-app"

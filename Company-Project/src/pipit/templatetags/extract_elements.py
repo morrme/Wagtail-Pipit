@@ -40,6 +40,8 @@ def extract_elements(source, element_type, src_prefix="", *args, **kwargs):
             continue
 
         src = tag.attrs[source_attribute_name]
+        # /static prefix is added later in the process by static()
+        src = src.lstrip("/static")
         src = "{}{}".format(src_prefix, src)
         src = static(src)
         tag.attrs[source_attribute_name] = src

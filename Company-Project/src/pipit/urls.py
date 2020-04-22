@@ -38,6 +38,15 @@ if settings.DEBUG:
 
         urlpatterns += [url(r"^__debug__/", include(debug_toolbar.urls))]
 
+    if "revproxy" in settings.INSTALLED_APPS:
+        from revproxy.views import ProxyView
+
+        urlpatterns += [
+            url(r'^proxy/(?P<path>.*)$',
+                ProxyView.as_view(upstream=settings.REACT_DEVSERVER_URL)
+            ),
+        ]
+
 urlpatterns += [
     url(settings.ADMIN_URL, admin.site.urls),
     url(r"^cms/", include(wagtailadmin_urls)),

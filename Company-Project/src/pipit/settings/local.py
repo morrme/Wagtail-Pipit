@@ -16,7 +16,7 @@ TEMPLATES[0]["OPTIONS"]["debug"] = DEBUG
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 # Replace built in runserver with a ssl enabled
-INSTALLED_APPS += ["sslserver"]
+INSTALLED_APPS += ["sslserver", "revproxy"]
 
 # Allow weak local passwords
 AUTH_PASSWORD_VALIDATORS = []
