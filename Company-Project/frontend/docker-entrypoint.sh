@@ -6,7 +6,7 @@ case "$CMD" in
         exec npm start
         ;;
     "build" )
-        exec npm build
+        exec npm run build
         ;;
     * )
         # Run custom command. Thanks to this line we can still use
