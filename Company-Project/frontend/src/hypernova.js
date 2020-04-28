@@ -7,9 +7,9 @@ require = require("esm")(module/*, options*/)
 
 const moduleAlias = require('module-alias')
 moduleAlias.addAliases({
-  'utils': __dirname + '/src/utils',
-  'styles': __dirname + '/src/styles',
-  'components': __dirname + '/src/components',
+  'utils': __dirname + '/utils',
+  'styles': __dirname + '/styles',
+  'components': __dirname + '/components',
 })
 
 
@@ -60,7 +60,7 @@ let config = {
             }
 
             try {
-                const Component = require("./src/containers/App").default;
+                const Component = require("./containers/App").default;
                 return renderReact(name, Component);
             } catch (e) {
                 Sentry.captureException(e);
