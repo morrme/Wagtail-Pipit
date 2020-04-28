@@ -8,8 +8,11 @@
                     {% else %}
                         null
                     {% endif %}),
-                (document.getElementById('{{ component.identifier }}').firstChild
-                || document.getElementById('{{ component.identifier }}'))
+                {% if ssr_available and component.ssr_params.hypernova_id %}
+                    document.querySelector('div[data-hypernova-id="{{ component.ssr_params.hypernova_id }}"]')
+                {% else %}
+                    document.getElementById('{{ component.identifier }}')
+                {% endif %}
             );
         {% endfor %}
     }
