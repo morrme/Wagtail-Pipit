@@ -12,6 +12,7 @@ from pipit.settings.base import *  # NOQA
 VS_CODE_REMOTE_DEBUG = get_env_bool("VS_CODE_REMOTE_DEBUG", default=False)
 DEBUG = True
 TEMPLATES[0]["OPTIONS"]["debug"] = DEBUG
+REACT_DEVSERVER = True
 
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
