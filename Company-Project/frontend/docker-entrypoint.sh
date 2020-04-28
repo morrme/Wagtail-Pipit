@@ -8,6 +8,9 @@ case "$CMD" in
     "build" )
         exec npm run build
         ;;
+    "test" )
+        exec npm run test
+        ;;
     * )
         # Run custom command. Thanks to this line we can still use
         # "docker run our_container /bin/bash" and it will work
