@@ -1,4 +1,4 @@
-FROM node:10.15
+FROM node:10.20-buster-slim
 MAINTAINER Frojd
 LABEL version="v0.0.0"
 
