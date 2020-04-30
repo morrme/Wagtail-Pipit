@@ -65,6 +65,10 @@ let config = {
                 const Component = require("./containers/App").default;
                 return renderReact(name, Component);
             } catch (e) {
+                if (DEV_MODE) {
+                    console.log(e);
+                }
+
                 Sentry.captureException(e);
             }
         }
