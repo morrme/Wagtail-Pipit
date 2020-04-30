@@ -38,8 +38,6 @@ services:
     ports:
       - "3030:3030"
     environment:
-      - HYPERNOVA_PORT=3000
-      - HYPERNOVA_USE_VM=0
       - HYPERNOVA_DISABLE_MODULE_CACHE=1
       - CRA_PUBLIC_URL=/proxy
   db:
