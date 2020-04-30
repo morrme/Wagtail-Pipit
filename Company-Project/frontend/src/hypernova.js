@@ -22,6 +22,8 @@ const SENTRY_ENV = process.env.SENTRY_ENV;
 const SENTRY_RELEASE = process.env.SENTRY_RELEASE;
 // const USE_VM = process.env.HYPERNOVA_USE_VM === '1';
 
+process.env.PUBLIC_URL = process.env.CRA_PUBLIC_URL;
+
 function invalidateModuleCacheStartingWith(path) {
     for (let name in require.cache) {
         if (name.indexOf(path) !== 0) {
