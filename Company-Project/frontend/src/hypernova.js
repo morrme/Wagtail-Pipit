@@ -13,6 +13,15 @@ moduleAlias.addAliases({
 })
 
 
+const throwErrorOnFiletype = (_module, file) => {
+    throw Error(
+        'Error loading '+file+'. Loading assets through import are not supported.'
+    );
+}
+require.extensions['.jpg'] = throwErrorOnFiletype;
+require.extensions['.png'] = throwErrorOnFiletype;
+require.extensions['.svg'] = throwErrorOnFiletype;
+
 const PORT = parseInt(process.env.HYPERNOVA_PORT);
 const DEV_MODE = process.env.HYPERNOVA_DEV_MODE === '1';
 const HYPERNOVA_HOST = process.env.HYPERNOVA_HOST;
