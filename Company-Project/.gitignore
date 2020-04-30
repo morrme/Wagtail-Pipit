@@ -60,4 +60,4 @@ htmlcov
 .mypy_cache
 
 # Hypernova
-.ignored-node_modules
+.ignored-ssr-node_modules
