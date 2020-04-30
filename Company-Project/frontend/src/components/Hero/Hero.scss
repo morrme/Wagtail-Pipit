@@ -1,5 +1,15 @@
 @import 'styles/includes.scss';
 
 .Hero {
-    padding: 8px 0 0 24px;
+    padding: 24px;
+    background-color: #250154;
+
+    &__Title {
+        color: white;
+    }
+
+    &__TitleIcon {
+        width: 32px;
+        margin-right: 10px;
+    }
 }
