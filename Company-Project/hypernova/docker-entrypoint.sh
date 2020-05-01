@@ -3,7 +3,9 @@ CMD=$1
 
 case "$CMD" in
     "start" )
+        echo "Installing dependencies"
         cd /app && npm install && cd -
+        echo "npm install complete"
         exec node bootstrap.js
         ;;
     * )

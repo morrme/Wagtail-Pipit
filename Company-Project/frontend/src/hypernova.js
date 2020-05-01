@@ -94,5 +94,5 @@ let config = {
 //     })
 // }
 
-
+console.log("Starting SSR Server")
 hypernova(config);
