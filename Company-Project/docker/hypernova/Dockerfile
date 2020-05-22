@@ -10,11 +10,8 @@ ENV HYPERNOVA_PORT=3030 \
     SENTRY_ENV=local \
     SENTRY_RELEASE=0.0.1
 
-ADD package.json package.json
-RUN npm install
-
-ADD bootstrap.js bootstrap.js
-
+ADD wait-for-it.sh wait-for-it.sh
 ADD docker-entrypoint.sh docker-entrypoint.sh
+
 ENTRYPOINT ["./docker-entrypoint.sh"]
 CMD ["start"]

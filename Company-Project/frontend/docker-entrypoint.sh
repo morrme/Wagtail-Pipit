@@ -3,6 +3,7 @@ CMD=$1
 
 case "$CMD" in
     "start" )
+        npm install
         exec npm start
         ;;
     "build" )

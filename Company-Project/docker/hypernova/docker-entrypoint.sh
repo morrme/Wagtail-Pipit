@@ -3,10 +3,9 @@ CMD=$1
 
 case "$CMD" in
     "start" )
-        echo "Installing dependencies"
-        cd /app && npm install && cd -
-        echo "npm install complete"
-        exec node bootstrap.js
+        ./wait-for-it.sh -t 0 frontend:3000 -- echo "Frontend ready"
+        cd /app
+        exec npm run hypernova
         ;;
     * )
         # Run custom command. Thanks to this line we can still use
