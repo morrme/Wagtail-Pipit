@@ -24,6 +24,17 @@ services:
       - "./src:/webapp:cached"
     ports:
       - "3000:3000"
+  storybook:
+    image: frojd/frontend_and_ssr
+    volumes:
+      - "./frontend:/app:cached"
+    ports:
+      - "3001:3001"
+    depends_on:
+      - frontend
+    environment:
+      - CRA_PUBLIC_URL=/proxy
+    command: storybook
   ssr:
     image: frojd/frontend_and_ssr
     volumes:
