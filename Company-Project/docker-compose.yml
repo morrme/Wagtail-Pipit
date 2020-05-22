@@ -15,7 +15,7 @@ services:
       - db
     env_file: ./docker/config/web.env
   frontend:
-    image: frojd/frontend
+    image: frojd/frontend_and_ssr
     build:
       context: ./frontend
       dockerfile: Dockerfile
@@ -25,10 +25,7 @@ services:
     ports:
       - "3000:3000"
   ssr:
-    image: frojd/hypernova
-    build:
-      context: ./docker/hypernova
-      dockerfile: Dockerfile
+    image: frojd/frontend_and_ssr
     volumes:
       - "./frontend:/app:cached"
     ports:
@@ -38,6 +35,8 @@ services:
     environment:
       - HYPERNOVA_DISABLE_MODULE_CACHE=1
       - CRA_PUBLIC_URL=/proxy
+      - HYPERNOVA_DEV_MODE=1
+    command: hypernova
   db:
     image: mdillon/postgis:10
     ports:

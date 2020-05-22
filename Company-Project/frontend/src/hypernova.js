@@ -22,9 +22,9 @@ require.extensions['.jpg'] = throwErrorOnFiletype;
 require.extensions['.png'] = throwErrorOnFiletype;
 require.extensions['.svg'] = throwErrorOnFiletype;
 
-const PORT = parseInt(process.env.HYPERNOVA_PORT);
+const PORT = process.env.HYPERNOVA_PORT ? parseInt(process.env.HYPERNOVA_PORT) : 3030;
 const DEV_MODE = process.env.HYPERNOVA_DEV_MODE === '1';
-const HYPERNOVA_HOST = process.env.HYPERNOVA_HOST;
+const HYPERNOVA_HOST = process.env.HYPERNOVA_HOST || '0.0.0.0';
 const DISABLE_MODULE_CACHE = process.env.HYPERNOVA_DISABLE_MODULE_CACHE === '1';
 const SENTRY_DSN = process.env.SENTRY_DSN;
 const SENTRY_ENV = process.env.SENTRY_ENV;
