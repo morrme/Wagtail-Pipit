@@ -30,7 +30,7 @@ services:
   ssr:
     image: frojd/hypernova
     build:
-      context: ./hypernova
+      context: ./docker/hypernova
       dockerfile: Dockerfile
     volumes:
       - "./frontend/src:/app/src:cached"
