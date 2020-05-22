@@ -40,10 +40,18 @@ if settings.DEBUG:
 
     if "revproxy" in settings.INSTALLED_APPS:
         from revproxy.views import ProxyView
+        from urllib3 import PoolManager
+
+        class NoSSLVerifyProxyView(ProxyView):
+            def __init__(self, *args, **kwargs):
+                super().__init__(*args, **kwargs)
+                self.http = PoolManager(
+                    cert_reqs='CERT_NONE', assert_hostname=False
+                )
 
         urlpatterns += [
             url(r'^proxy/(?P<path>.*)$',
-                ProxyView.as_view(upstream=settings.REACT_DEVSERVER_URL)
+                NoSSLVerifyProxyView.as_view(upstream=settings.REACT_DEVSERVER_URL)
             ),
         ]
 
