@@ -25,6 +25,7 @@
   },
   "scripts": {
     "start": "PUBLIC_URL=/proxy react-scripts start",
+    "start-ssl": "HTTPS=true PUBLIC_URL=/proxy react-scripts start",
     "build": "PUBLIC_URL=/static/pipit/build react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",

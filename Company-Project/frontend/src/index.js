@@ -13,10 +13,23 @@ serviceWorker.unregister();
 
 let params = new URLSearchParams(window.location.search)
 const DEVSERVER = params.get('devserver') === '1';
+let DEVSERVER_DOMAIN = "localhost";
+
+function isLocalDoamain(url) {
+    let hostname = new URL("http://"+url).hostname;
+    return hostname.indexOf(".test") === hostname.length - 5;
+}
+
+if (
+    params.get('devserver_domain')
+    && isLocalDoamain(params.get('devserver_domain'))
+) {
+    DEVSERVER_DOMAIN = params.get('devserver_domain')
+}
 
 let target = window;
 if (DEVSERVER) {
-    document.domain = 'localhost';
+    document.domain = DEVSERVER_DOMAIN;
     target = window.parent;
 }
 

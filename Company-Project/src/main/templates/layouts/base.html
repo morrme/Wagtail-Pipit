@@ -44,8 +44,8 @@
         {% endblock main %}
 
         {% if SETTINGS.REACT_DEVSERVER  %}
-            <script>document.domain = 'localhost';</script>
-            <iframe src="{{ SETTINGS.REACT_DEVSERVER_PUBLIC_URL }}?devserver=1" id="frontend-devserver" style="height: 0; width: 0; border: 0; visibility: hidden;"></iframe>
+            <script>document.domain = '{{ request.get_host }}';</script>
+            <iframe src="{{ SETTINGS.REACT_DEVSERVER_PUBLIC_URL }}?devserver=1&devserver_domain={{ request.get_host }}" id="frontend-devserver" style="height: 0; width: 0; border: 0; visibility: hidden;"></iframe>
         {% endif %}
 
         {% if not SETTINGS.REACT_DEVSERVER  %}

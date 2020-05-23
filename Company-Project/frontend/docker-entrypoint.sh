@@ -3,8 +3,12 @@ CMD=$1
 
 case "$CMD" in
     "start" )
-        npm install
+        [ ! -d "./node_modules/" ] && npm install
         exec npm start
+        ;;
+    "start_ssl" )
+        [ ! -d "./node_modules/" ] && npm install
+        exec npm run start-ssl
         ;;
     "build" )
         exec npm run build
