@@ -32,7 +32,8 @@
     "postbuild": "rm -rf /webapp/pipit/static/pipit/build/ || true && cp -r build/ /webapp/pipit/static/pipit/build/",
     "hypernova": "node src/hypernovaBootstrap.js",
     "storybook": "start-storybook -h 0.0.0.0 -p 3001 -s public",
-    "build-storybook": "build-storybook -s public"
+    "build-storybook": "build-storybook -s public",
+    "new": "node cli/bin.js new"
   },
   "eslintConfig": {
     "extends": "react-app"
