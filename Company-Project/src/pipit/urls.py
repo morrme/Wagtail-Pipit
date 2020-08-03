@@ -9,6 +9,7 @@ from wagtail.documents import urls as wagtaildocs_urls
 from wagtail.core import urls as wagtail_urls
 from wagtail.contrib.sitemaps.views import sitemap
 
+from .api import api_router
 from main.views.page_not_found import PageNotFoundView
 from main.views.error_500 import error_500_view
 
@@ -50,22 +51,24 @@ if settings.DEBUG:
         CustomProxyView = ProxyView
 
         if settings.REACT_DEVSERVER_HTTPS:
+
             class NoSSLVerifyProxyView(ProxyView):
                 def __init__(self, *args, **kwargs):
                     super().__init__(*args, **kwargs)
                     self.http = PoolManager(
-                        cert_reqs='CERT_NONE', assert_hostname=False
+                        cert_reqs="CERT_NONE", assert_hostname=False
                     )
 
             CustomProxyView = NoSSLVerifyProxyView
 
         proxy_upstream_url = "{}://{}/proxy".format(
             "https" if settings.REACT_DEVSERVER_HTTPS else "http",
-            settings.REACT_DEVSERVER_REVPROXY_DOMAIN
+            settings.REACT_DEVSERVER_REVPROXY_DOMAIN,
         )
         urlpatterns += [
-            url(r'^proxy/(?P<path>.*)$',
-                CustomProxyView.as_view(upstream=proxy_upstream_url)
+            url(
+                r"^proxy/(?P<path>.*)$",
+                CustomProxyView.as_view(upstream=proxy_upstream_url),
             ),
         ]
 
@@ -74,6 +77,7 @@ urlpatterns += [
     path("cms/", include(wagtailadmin_urls)),
     path("documents/", include(wagtaildocs_urls)),
     path("sitemap.xml", sitemap, name="sitemap"),
+    url(r'^api/v2/', api_router.urls),
 ]
 
 urlpatterns += [url(r"", include(wagtail_urls))]

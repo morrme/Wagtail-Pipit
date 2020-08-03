@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     "wagtail.search",
     "wagtail.admin",
     "wagtail.core",
+    "wagtail.api.v2",
     "wagtail.contrib.forms",
     "wagtail.contrib.redirects",
     "wagtail.contrib.modeladmin",
@@ -60,6 +61,7 @@ INSTALLED_APPS = [
     "modelcluster",
     "taggit",
     "wagtailfontawesome",
+    "rest_framework",
     # Project specific apps
     "pipit",
     "sitesettings",
