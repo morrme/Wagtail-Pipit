@@ -1,20 +1,43 @@
 from django.contrib.contenttypes.models import ContentType
 
 from wagtail import VERSION as WAGTAIL_VERSION
+from wagtail.core.models import Page
 from wagtail.api.v2.router import WagtailAPIRouter
-from wagtail.api.v2.views import PagesAPIViewSet
+from wagtail.api.v2.views import PagesAPIViewSet, BaseAPIViewSet
 
 from wagtail_headless_preview.models import PagePreview
+from rest_framework import serializers
 from rest_framework.response import Response
 
 
 # Create the router. "wagtailapi" is the URL namespace
 api_router = WagtailAPIRouter('wagtailapi')
-
 api_router.register_endpoint('pages', PagesAPIViewSet)
 
+class PageRelativeUrlListSerializer(serializers.Serializer):
+    def to_representation(self, obj):
+        return {
+            "title": obj.title,
+            "relative_url": obj.get_url(None),
+        }
 
-class PagePreviewAPIViewSet(PagesAPIViewSet):
+
+class PageRelativeUrlListAPIViewSet(PagesAPIViewSet):
+    def listing_view(self, request):
+        queryset = self.get_queryset()
+        self.check_query_parameters(queryset)
+        queryset = self.filter_queryset(queryset)
+        queryset = self.paginate_queryset(queryset)
+        serializer = self.get_serializer(queryset, many=True)
+        return self.get_paginated_response(serializer.data)
+
+    def get_serializer(self, qs, many=True):
+        return PageRelativeUrlListSerializer(qs, many=many)
+
+api_router.register_endpoint('page_relative_urls', PageRelativeUrlListAPIViewSet)
+
+
+class PagePreviewAPIViewSet(BaseAPIViewSet):
     known_query_parameters = PagesAPIViewSet.known_query_parameters.union(
         ['content_type', 'token']
     )

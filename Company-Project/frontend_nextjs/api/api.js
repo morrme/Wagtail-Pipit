@@ -21,7 +21,7 @@ export async function getPage(path) {
 
 export async function getAllPages() {
   const headers = { 'Content-Type': 'application/json' }
-  const url = API_URL + "/api/v2/pages/";
+  const url = API_URL + "/api/v2/page_relative_urls/";
   const res = await fetch(url, headers);
   const json = await res.json();
   return keysToCamelFromSnake(json);

@@ -1,6 +1,5 @@
 import { getPage, getAllPages } from '../api/api';
 import cache from '../containers';
-// import styles from '../styles/Home.module.css'
 
 export default function CatchAllPage({ componentName, componentProps }) {
   const Component = cache[componentName];
@@ -13,8 +12,7 @@ export default function CatchAllPage({ componentName, componentProps }) {
 export async function getStaticPaths() {
   const data = await getAllPages();
 
-  let htmlUrls = data.items.map(x => x.meta.htmlUrl);
-  htmlUrls = htmlUrls.map(x => x.split("http://localhost/").join(""))
+  let htmlUrls = data.items.map(x => x.relativeUrl);
   htmlUrls = htmlUrls.filter(x => x);
   htmlUrls = htmlUrls.map(x => x.split("/"));
   htmlUrls = htmlUrls.map(x => x.filter(y => y))
