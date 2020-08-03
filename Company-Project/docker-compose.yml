@@ -14,45 +14,6 @@ services:
     depends_on:
       - db
     env_file: ./docker/config/web.env
-    environment:
-      - REACT_DEVSERVER_PORT=8083
-    #frontend:
-    #  image: frojd/company_project_frontend
-    #  build:
-    #    context: ./frontend
-    #    dockerfile: Dockerfile
-    #  volumes:
-    #    - "./frontend:/app"
-    #    - "./src:/webapp:cached"
-    #  ports:
-    #    - "8083:3000"
-    #  environment:
-    #    - CHOKIDAR_USEPOLLING=true
-    #    - WDS_SOCKET_PORT=8083
-    #storybook:
-    #  image: frojd/company_project_frontend
-    #  volumes:
-    #    - "./frontend:/app:cached"
-    #  ports:
-    #    - "8084:3001"
-    #  depends_on:
-    #    - frontend
-    #  environment:
-    #    - CRA_PUBLIC_URL=/proxy
-    #  command: storybook
-    #ssr:
-    #  image: frojd/company_project_frontend
-    #  volumes:
-    #     - "./frontend:/app:cached"
-    #  ports:
-    #    - "3030"
-    #  depends_on:
-    #    - frontend
-    #  environment:
-    #    - CRA_PUBLIC_URL=/proxy
-    #    - HYPERNOVA_DISABLE_MODULE_CACHE=1
-    #    - HYPERNOVA_DEV_MODE=1
-    #  command: hypernova
   db:
     image: postgis/postgis:12-2.5
     ports:

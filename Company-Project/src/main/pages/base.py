@@ -19,7 +19,7 @@ class BasePage(HeadlessPreviewMixin, EnhancedEditHandlerMixin, SeoMixin, Page):
     serializer_class = "main.pages.BasePageSerializer"
 
     def __init__(self, *args, **kwargs):
-        self.template = "pages/react.html"
+        self.template = "pages/empty.html"
         self.component_name = self.__class__.__name__
         super().__init__(*args, **kwargs)
 

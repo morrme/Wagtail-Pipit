@@ -70,8 +70,6 @@ INSTALLED_APPS = [
     "customimage",
     "customdocument",
     "main",
-    # Placed last so we can override templates
-    "django_react_templatetags",
 ]
 
 MIDDLEWARE = [
@@ -243,19 +241,7 @@ SECURE_CONTENT_TYPE_NOSNIFF = True
 # Admin
 ADMIN_URL = r"^admin/"
 
-# React Templatetags
-REACT_COMPONENT_PREFIX = "Components."
-REACT_RENDER_HOST = get_env("REACT_HOST")
-REACT_SSR_SERVICE = "django_react_templatetags.ssr.hypernova.HypernovaService"
-
-# CRA
-REACT_DEVSERVER = False
-REACT_DEVSERVER_PORT = get_env("REACT_DEVSERVER_PORT", 3000)
-REACT_DEVSERVER_REVPROXY_DOMAIN = get_env(
-    "REACT_DEVSERVER_REVPROXY_DOMAIN", "frontend:3000"
-)
-REACT_DEVSERVER_HTTPS = get_env_bool("REACT_DEVSERVER_HTTPS", False)
-
+# NextJS
 HEADLESS_PREVIEW_CLIENT_URLS = {
     'default': 'http://localhost:3000/api/preview/',
 }
