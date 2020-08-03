@@ -9,9 +9,9 @@ from wagtail.documents import urls as wagtaildocs_urls
 from wagtail.core import urls as wagtail_urls
 from wagtail.contrib.sitemaps.views import sitemap
 
-from .api import api_router
 from main.views.page_not_found import PageNotFoundView
 from main.views.error_500 import error_500_view
+from next_js.api import api_router
 
 
 handler404 = PageNotFoundView.as_view()

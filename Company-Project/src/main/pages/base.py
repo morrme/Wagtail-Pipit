@@ -5,11 +5,12 @@ from django.http import HttpResponse, JsonResponse
 from django.http.request import HttpRequest
 from wagtail.core.models import Page
 from rest_framework.serializers import Serializer
+from wagtail_headless_preview.models import HeadlessPreviewMixin
 
 from ..mixins import EnhancedEditHandlerMixin, SeoMixin
 
 
-class BasePage(EnhancedEditHandlerMixin, SeoMixin, Page):
+class BasePage(HeadlessPreviewMixin, EnhancedEditHandlerMixin, SeoMixin, Page):
     # Basepage is not anything creatable in admin
     is_creatable = False
     show_in_menus_default = True

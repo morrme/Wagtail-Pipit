@@ -62,6 +62,7 @@ INSTALLED_APPS = [
     "taggit",
     "wagtailfontawesome",
     "rest_framework",
+    "wagtail_headless_preview",
     # Project specific apps
     "pipit",
     "sitesettings",
@@ -254,3 +255,7 @@ REACT_DEVSERVER_REVPROXY_DOMAIN = get_env(
     "REACT_DEVSERVER_REVPROXY_DOMAIN", "frontend:3000"
 )
 REACT_DEVSERVER_HTTPS = get_env_bool("REACT_DEVSERVER_HTTPS", False)
+
+HEADLESS_PREVIEW_CLIENT_URLS = {
+    'default': 'http://localhost:3000/api/preview/',
+}
